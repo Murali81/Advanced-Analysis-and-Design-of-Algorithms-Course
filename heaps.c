@@ -4,11 +4,28 @@ int noofbits=0;
 int arr[32];
 struct node
 {
-	int val;
+	int data;
 	struct node *right;
 	struct node *left;
 	struct node *parent;
 };
+struct node *root=NULL;
+struct node* newNode(int data)
+{
+  // Allocate memory for new node 
+  struct node* node = (struct node*)malloc(sizeof(struct node));
+ 
+  // Assign data to this node
+  node->data = data;
+ 
+  // Initialize left and right children as NULL
+  node->left = NULL;
+  node->right = NULL;
+    node->parent = NULL;
+  return(node);
+}
+
+
 
 int numtobit(int num)
 {
