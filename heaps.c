@@ -27,7 +27,7 @@ struct node* newNode(int data)
 
 struct node *max_heapify(struct node *root)
 {
-//	printf("\ncame n");
+	printf("\ncame n");
 	if (root->left==NULL && root->right==NULL)
 	{
 		printf("\nReached end");
@@ -53,6 +53,20 @@ struct node *max_heapify(struct node *root)
 		return max_heapify(largest);
 	}
 }
+
+
+//struct node *extract_min(struct node *root)
+//{
+//	if (root->left==NULL && root->right==NULL)
+//	{
+//		printf("\nReached end");
+//		return root;
+//	}
+//	struct node* largest;
+//	largest=root;
+//}
+
+
 
 
 
@@ -83,6 +97,19 @@ if(bitpointer==0)
 		{
 						printf("\nRight to root");
 			root->right=newnode;
+		}
+//    	printf("\nParent  data is %d and Root data is %d",root->parent->data,root->data);
+
+		while(newnode->parent!=NULL && (newnode->parent->data<newnode->data))
+		{
+			
+					int temp;
+					printf("\nSwapped %d with %d",newnode->parent->data,newnode->data);
+					temp=newnode->parent->data;
+					newnode->parent->data=newnode->data;
+					newnode->data=temp;
+				newnode=newnode->parent;	
+			
 		}
 			
 }
@@ -148,6 +175,7 @@ int inparray[8]={1,10,14,9,23,54,21,6};
 //int num;
 for(num=1;num<=8;num++)
 {
+	printf("\nInserting %d",inparray[num-1]);
 	noofbits=numtobit(num);
 	if(num==1)
 	root=insert(inparray[num-1],root,noofbits,num);
