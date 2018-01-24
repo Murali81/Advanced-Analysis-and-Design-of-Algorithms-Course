@@ -8,7 +8,7 @@ struct node
 	struct node *right;
 	struct node *left;
 	struct node *parent;
-}
+};
 
 int numtobit(int num)
 {
