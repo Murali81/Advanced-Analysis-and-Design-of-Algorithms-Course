@@ -103,7 +103,7 @@ int numtobit(int num)
 	arr[counter]=res;	
 	num=num/2;
 	}
-	printf("No of relevant bits for %d are %d",dupnum,counter-1 );
+	printf("Max index in the big array for %d are %d",dupnum,counter-1 );
 	return counter-1;   //Intentionally I am reducing the length of bit set by 1 because for inserting at 6th position,i.e 110, we exclude the first bit and the remaining bits are the path.
 
 }
@@ -112,41 +112,51 @@ void main()
 {
  	int noofbits;
  	int num=0;
-
-	num=num+1;
+int inparray[8]={16,10,14,9,23,54,21,6};
+//int num;
+for(num=1;num<=8;num++)
+{
 	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",7);
-	root=insert(7,root,noofbits,num);
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",19);
-	insert(19,root,noofbits,num);
-
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",10);
-	insert(10,root,noofbits,num);
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",13);
-	insert(13,root,noofbits,num);
-
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",18);
-	insert(18,root,noofbits,num);
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",19);
-	insert(19,root,noofbits,num);
-
-	num=num+1;
-	noofbits=numtobit(num);
-	printf("\nFunction called with data %d",20);
-	insert(20,root,noofbits,num);
+	if(num==1)
+	root=insert(inparray[num-1],root,noofbits,num);
+	else
+	insert(inparray[num-1],root,noofbits,num);
+}
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",7);
+//	root=insert(7,root,noofbits,num);
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",19);
+//	insert(19,root,noofbits,num);
+//
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",10);
+//	insert(10,root,noofbits,num);
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",13);
+//	insert(13,root,noofbits,num);
+//
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",18);
+//	insert(18,root,noofbits,num);
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",19);
+//	insert(19,root,noofbits,num);
+//
+//	num=num+1;
+//	noofbits=numtobit(num);
+//	printf("\nFunction called with data %d",20);
+//	insert(20,root,noofbits,num);
+	
 }
