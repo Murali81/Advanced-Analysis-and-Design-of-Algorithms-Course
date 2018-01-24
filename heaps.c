@@ -121,33 +121,32 @@ void main()
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",19);
-	root=insert(19,root,noofbits,num);
+	insert(19,root,noofbits,num);
 
 
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",10);
-	root=insert(10,root,noofbits,num);
+	insert(10,root,noofbits,num);
 
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",13);
-	root=insert(13,root,noofbits,num);
+	insert(13,root,noofbits,num);
 
 
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",18);
-	root=insert(18,root,noofbits,num);
+	insert(18,root,noofbits,num);
 
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",19);
-	root=insert(19,root,noofbits,num);
+	insert(19,root,noofbits,num);
 
 	num=num+1;
 	noofbits=numtobit(num);
 	printf("\nFunction called with data %d",20);
-	root=insert(20,root,noofbits,num);
-	
+	insert(20,root,noofbits,num);
 }
