@@ -102,21 +102,21 @@ if(bitpointer==0)
 		}
 	}
 
-	else
-	{
-		if(arr[bitpointer]==0)
-		{
-			printf("\nLeft Traversal");
-			return insert(data,root->left,bitpointer-1,num);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
-			
-		}
-		else if(arr[bitpointer]==1)
-		{
-			printf("\nRight Traversal");
-			return insert(data,root->right,bitpointer-1,num);
-			 
-		}
-	}
+//	else
+//	{
+//		if(arr[bitpointer]==0)
+//		{
+//			printf("\nLeft Traversal-----------");
+//			return insert(data,root->left,bitpointer-1,num);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
+//			
+//		}
+//		else if(arr[bitpointer]==1)
+//		{
+//			printf("\nRight Traversal------------");
+//			return insert(data,root->right,bitpointer-1,num);
+//			 
+//		}
+//	}
 
 
 }
