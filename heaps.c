@@ -24,6 +24,38 @@ struct node* newNode(int data)
     node->parent = NULL;
   return(node);
 }
+
+struct node *max_heapify(struct node *root)
+{
+//	printf("\ncame n");
+	if (root->left==NULL && root->right==NULL)
+	{
+		printf("\nReached end");
+		return root;
+	}
+	struct node* largest;
+	largest=root;
+	if(root->left->data>largest->data)
+	{
+		largest=root->left;
+	}
+		if(root->right->data > largest->data)
+	{
+		largest=root->right;
+	}
+	if(largest->data!=root->data)
+	{
+		int temp;
+		printf("\nSwapped %d with %d",largest->data,root->data);
+		temp=largest->data;
+		largest->data=root->data;
+		root->data=temp;
+		return max_heapify(largest);
+	}
+}
+
+
+
 struct node *insert(int data,struct node *root,int bitpointer,int num)    //bitpointer = noofbits-1 .This is given during function call
 {
 
@@ -112,7 +144,7 @@ void main()
 {
  	int noofbits;
  	int num=0;
-int inparray[8]={16,10,14,9,23,54,21,6};
+int inparray[8]={1,10,14,9,23,54,21,6};
 //int num;
 for(num=1;num<=8;num++)
 {
@@ -122,6 +154,7 @@ for(num=1;num<=8;num++)
 	else
 	insert(inparray[num-1],root,noofbits,num);
 }
+max_heapify(root);
 //	num=num+1;
 //	noofbits=numtobit(num);
 //	printf("\nFunction called with data %d",7);
