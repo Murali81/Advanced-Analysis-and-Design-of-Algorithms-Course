@@ -91,9 +91,21 @@ struct node *find_leaf(struct node *root,int noofbits)
 }
 
 
-int extract_max(struct node *root)
+int extract_max()
 {
 	int maxelement; 
+	if(root==NULL)
+	{
+		printf("\n\nHEAP IS EMPTY");
+		return -2342;
+	}
+	if(root->left ==NULL && root->right==NULL)
+	{
+		maxelement=root->data;
+		root=NULL;
+		return maxelement;
+	}
+
 	struct node *leaf_node;
 	noofbits=numtobit(heapsize);
 	leaf_node=find_leaf(root,noofbits);
@@ -105,6 +117,19 @@ int extract_max(struct node *root)
 	heapsize=heapsize-1;
 	return maxelement;
 }
+
+
+int isEmpty()
+{
+	if(root==NULL)
+	{
+				printf("\n\nHEAP IS EMPTY");
+		return 0;
+	}
+	else
+			return 1;
+}
+
 
 
 
@@ -222,17 +247,17 @@ printf("\n\n\nValue of heapsize is %d",heapsize);
 max_heapify(root);
 printf("\n\n\nheapified\n\n");
 
-printf("\nTesting extract_max\n");
+printf("\n\n\nTesting extract_max\n");
 while(root!=NULL)
 	{
-	max_element=extract_max(root);
+	max_element=extract_max();
 	printf("\n\n\n MAX is %d\n\n\n",max_element);
-	if(root->left==NULL && root->right==NULL && root->parent==NULL)
-		{
-		max_element=root->data;
-		printf("\n\n\n MAX is %d\n\n\n",max_element);
-		root=NULL;
-		}
 	}
+
+
+
+printf("\n\n\nTesting 'is_empty' FUNCTION");
+
+isEmpty();
 
 }

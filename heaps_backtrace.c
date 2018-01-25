@@ -94,9 +94,20 @@ struct node *find_leaf(struct node *root,int noofbits)
 }
 
 
-int extract_max(struct node *root)
+int extract_max()
 {
 	int maxelement;
+	if(root==NULL)
+	{
+		printf("\n\nHEAP IS EMPTY");
+		return -2342;
+	}
+	if(root->left ==NULL && root->right==NULL)
+	{
+		maxelement=root->data;
+		root=NULL;
+		return maxelement;
+	}
 	struct node *leaf_node;
 	noofbits=numtobit(heapsize);
 	printf("Leaf node position is %d",heapsize);
@@ -109,7 +120,16 @@ int extract_max(struct node *root)
 	return maxelement;
 }
 
-
+int isEmpty()
+{
+	if(root==NULL)
+	{
+				printf("\n\nHEAP IS EMPTY");
+		return 0;
+	}
+	else
+			return 1;
+}
 
 struct node *insert(int data,struct node *root,int bitpointer)    //bitpointer = noofbits-1 .This is given during function call
 {
@@ -203,8 +223,8 @@ void main()
 {
  	int noofbits;
  	int num=0;
-	int inparray[8]={1,10,14,9,23,54,21,6};
-	int max_element=0;
+int inparray[8]={1,10,14,9,23,54,21,6};
+int max_element=0;
 	for(num=1;num<=8;num++)
 {
 	printf("\n\nInserting %d",inparray[num-1]);
@@ -219,18 +239,23 @@ max_heapify(root);
 printf("\nBubbled up");
 
 
+printf("\n\n\nTesting extract_max\n");
 
-printf("\n\n\nTesting extract_max");
+
+
+
+
 while(root!=NULL)
 	{
-	max_element=extract_max(root);
+	max_element=extract_max();
 	printf("\n\n\n MAX is %d\n\n\n",max_element);
-	if(root->left==NULL && root->right==NULL && root->parent==NULL)
-		{
-		max_element=root->data;
-		printf("\n\n\n MAX is %d\n\n\n",max_element);
-		root=NULL;
-		}
 	}
+
+
+
+printf("\n\n\nTesting 'is_empty' FUNCTION");
+
+isEmpty();
+
 
 }
