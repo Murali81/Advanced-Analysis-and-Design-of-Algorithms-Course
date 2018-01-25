@@ -28,18 +28,18 @@ struct node* newNode(int data)
 
 struct node *max_heapify(struct node *root)
 {
+
 	if (root->left==NULL && root->right==NULL)
 	{
-		printf("\nReached end");
 		return root;
 	}
 	struct node* largest;
 	largest=root;
-	if(root->left->data>largest->data)
+	if(root->left!=NULL && root->left->data>largest->data)
 	{
 		largest=root->left;
 	}
-		if(root->right->data > largest->data)
+		if(root->right!=NULL && root->right->data > largest->data)
 	{
 		largest=root->right;
 	}
@@ -65,18 +65,30 @@ struct node *find_leaf(struct node *root,int noofbits)
 		{
 			printf("\nLeft Traversal");
 			
-			return find_leaf(root->left,noofbits-1);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
+			find_leaf(root->left,noofbits-1);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
 			
 		}
 		else
 		{
 			printf("\nRight Traversal");
-			return find_leaf(root->right,noofbits-1);
+			find_leaf(root->right,noofbits-1);
 			 
 		}
 	}
+	
 	else
 	{
+		if(arr[noofbits+1]==0)
+		{
+			root->parent->left=NULL;
+//			printf("\n%d is to the left of %d.No of bits is %d",root->data,root->parent->data,noofbits+1);
+		}
+		else if(arr[noofbits+1]==1)
+
+		{
+			root->parent->right=NULL;
+//			printf("\n%d is to the right of %d",root->data,root->parent->data);
+		}
 		return root;
 	}
 }
@@ -84,13 +96,13 @@ struct node *find_leaf(struct node *root,int noofbits)
 
 int extract_max(struct node *root)
 {
-	int maxelement; 
+	int maxelement;
 	struct node *leaf_node;
 	noofbits=numtobit(heapsize);
+	printf("Leaf node position is %d",heapsize);
 	leaf_node=find_leaf(root,noofbits);
 	maxelement=root->data;
 	root->data=leaf_node->data;
-	leaf_node->parent->left=leaf_node->parent->right=NULL;
 	free(leaf_node);
 	max_heapify(root);
 	heapsize=heapsize-1;
@@ -99,10 +111,10 @@ int extract_max(struct node *root)
 
 
 
-struct node *insert(int data,struct node *root,int bitpointer,int num)    //bitpointer = noofbits-1 .This is given during function call
+struct node *insert(int data,struct node *root,int bitpointer)    //bitpointer = noofbits-1 .This is given during function call
 {
 
-if(num==1)
+if(root==NULL)
 {
 		struct node *newnode;
 		newnode=newNode(data);
@@ -118,14 +130,15 @@ if(bitpointer==0)
 		newnode->parent=root;
 		if(arr[bitpointer]==0)
 		{
-						printf("\nLeft to root");
+						printf("\nLeft insertion");
 			root->left=newnode;
 		}	
 		else if(arr[bitpointer]==1)
 		{
-						printf("\nRight to root");
+						printf("\nRight insertion");
 			root->right=newnode;
 		}
+		max_heapify(root);	
 		heapsize+=1;
 			
 }
@@ -134,16 +147,18 @@ if(bitpointer==0)
 		if(arr[bitpointer]==0)
 		{
 			printf("\nLeft Traversal");
-			insert(data,root->left,bitpointer-1,num);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
+			insert(data,root->left,bitpointer-1);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
 					
+			
 		}
 		else
 		{
 			printf("\nRight Traversal");
-			insert(data,root->right,bitpointer-1,num);
+			insert(data,root->right,bitpointer-1);
 		
 			 
 		}
+			max_heapify(root);	
 	}
 
 //	else
@@ -171,7 +186,7 @@ int numtobit(int num)
 	int dupnum=num;
 	int counter=-1;
 	int res;
-	printf("\n");
+//	printf("\n");
 	while(num!=0)
 	{
 		counter=counter+1;
@@ -179,7 +194,7 @@ int numtobit(int num)
 	arr[counter]=res;	
 	num=num/2;
 	}
-	printf("Max index in the big array for %d are %d",dupnum,counter-1 );
+//	printf("Max index in the big array for %d are %d",dupnum,counter-1 );
 	return counter-1;   //Intentionally I am reducing the length of bit set by 1 because for inserting at 6th position,i.e 110, we exclude the first bit and the remaining bits are the path.
 
 }
@@ -188,15 +203,34 @@ void main()
 {
  	int noofbits;
  	int num=0;
-int inparray[8]={1,10,14,9,23,54,21,6};
-for(num=1;num<=8;num++)
+	int inparray[8]={1,10,14,9,23,54,21,6};
+	int max_element=0;
+	for(num=1;num<=8;num++)
 {
-	printf("\nInserting %d",inparray[num-1]);
+	printf("\n\nInserting %d",inparray[num-1]);
 	noofbits=numtobit(num);
 	if(num==1)
-	root=insert(inparray[num-1],root,noofbits,num);
+	root=insert(inparray[num-1],root,noofbits);
 	else
-	insert(inparray[num-1],root,noofbits,num);
+	insert(inparray[num-1],root,noofbits);
 }
+printf("\n\n\nTesting max_heapify");
+max_heapify(root);
+printf("\nBubbled up");
+
+
+
+printf("\n\n\nTesting extract_max");
+while(root!=NULL)
+	{
+	max_element=extract_max(root);
+	printf("\n\n\n MAX is %d\n\n\n",max_element);
+	if(root->left==NULL && root->right==NULL && root->parent==NULL)
+		{
+		max_element=root->data;
+		printf("\n\n\n MAX is %d\n\n\n",max_element);
+		root=NULL;
+		}
+	}
 
 }

@@ -35,11 +35,11 @@ struct node *max_heapify(struct node *root)
 	}
 	struct node* largest;
 	largest=root;
-	if(root->left->data>largest->data)
+	if(root->left!=NULL &&(root->left->data>largest->data))
 	{
 		largest=root->left;
 	}
-		if(root->right->data > largest->data)
+		if(root->right!=NULL && (root->right->data > largest->data))
 	{
 		largest=root->right;
 	}
@@ -77,6 +77,15 @@ struct node *find_leaf(struct node *root,int noofbits)
 	}
 	else
 	{
+		if(arr[noofbits+1]==0)
+		{
+			root->parent->left=NULL;
+		}
+		else if(arr[noofbits+1]==1)
+
+		{
+			root->parent->right=NULL;
+		}
 		return root;
 	}
 }
@@ -90,7 +99,7 @@ int extract_max(struct node *root)
 	leaf_node=find_leaf(root,noofbits);
 	maxelement=root->data;
 	root->data=leaf_node->data;
-	leaf_node->parent->left=leaf_node->parent->right=NULL;
+//	leaf_node->parent->left=leaf_node->parent->right=NULL;
 	free(leaf_node);
 	max_heapify(root);
 	heapsize=heapsize-1;
@@ -99,10 +108,10 @@ int extract_max(struct node *root)
 
 
 
-struct node *insert(int data,struct node *root,int bitpointer,int num)    //bitpointer = noofbits-1 .This is given during function call
+struct node *insert(int data,struct node *root,int bitpointer)    //bitpointer = noofbits-1 .This is given during function call
 {
 
-if(num==1)
+if(root==NULL)
 {
 		struct node *newnode;
 		newnode=newNode(data);
@@ -145,13 +154,13 @@ if(bitpointer==0)
 		if(arr[bitpointer]==0)
 		{
 			printf("\nLeft Traversal");
-			return insert(data,root->left,bitpointer-1,num);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
+			return insert(data,root->left,bitpointer-1);                   // 0 for left && 1 for right. because for 2nd pos , 2- 1}0 .It means left.For 6th pos,6 -1}10 .One right and then left 
 			
 		}
 		else
 		{
 			printf("\nRight Traversal");
-			return insert(data,root->right,bitpointer-1,num);
+			return insert(data,root->right,bitpointer-1);
 			 
 		}
 	}
@@ -181,7 +190,7 @@ int numtobit(int num)
 	int dupnum=num;
 	int counter=-1;
 	int res;
-	printf("\n");
+//	printf("\n");
 	while(num!=0)
 	{
 		counter=counter+1;
@@ -189,7 +198,7 @@ int numtobit(int num)
 	arr[counter]=res;	
 	num=num/2;
 	}
-	printf("Max index in the big array for %d are %d",dupnum,counter-1 );
+//	printf("Max index in the big array for %d are %d",dupnum,counter-1 );
 	return counter-1;   //Intentionally I am reducing the length of bit set by 1 because for inserting at 6th position,i.e 110, we exclude the first bit and the remaining bits are the path.
 
 }
@@ -198,19 +207,32 @@ void main()
 {
  	int noofbits;
  	int num=0;
+ 	int max_element;
 int inparray[8]={1,10,14,9,23,54,21,6};
 for(num=1;num<=8;num++)
 {
-	printf("\nInserting %d",inparray[num-1]);
+	printf("\n\n\nInserting %d",inparray[num-1]);
 	noofbits=numtobit(num);
 	if(num==1)
-	root=insert(inparray[num-1],root,noofbits,num);
+	root=insert(inparray[num-1],root,noofbits);
 	else
-	insert(inparray[num-1],root,noofbits,num);
+	insert(inparray[num-1],root,noofbits);
 }
-printf("Value of heapsize is %d",heapsize);
+printf("\n\n\nValue of heapsize is %d",heapsize);
 max_heapify(root);
-printf("Value of max node is %d",root->data);
-extract_max(root);
-printf("Value of max node is %d",root->data);	
+printf("\n\n\nheapified\n\n");
+
+printf("\nTesting extract_max\n");
+while(root!=NULL)
+	{
+	max_element=extract_max(root);
+	printf("\n\n\n MAX is %d\n\n\n",max_element);
+	if(root->left==NULL && root->right==NULL && root->parent==NULL)
+		{
+		max_element=root->data;
+		printf("\n\n\n MAX is %d\n\n\n",max_element);
+		root=NULL;
+		}
+	}
+
 }
