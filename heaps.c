@@ -26,31 +26,31 @@ struct node* newNode(int data)
   return(node);
 }
 
-struct node *max_heapify(struct node *root)
+struct node *min_heapify(struct node *root)
 {
 	if (root->left==NULL && root->right==NULL)
 	{
 		printf("\nReached end");
 		return root;
 	}
-	struct node* largest;
-	largest=root;
-	if(root->left!=NULL &&(root->left->data>largest->data))
+	struct node* smallest;
+	smallest=root;
+	if(root->left!=NULL &&(root->left->data<smallest->data))
 	{
-		largest=root->left;
+		smallest=root->left;
 	}
-		if(root->right!=NULL && (root->right->data > largest->data))
+		if(root->right!=NULL && (root->right->data < smallest->data))
 	{
-		largest=root->right;
+		smallest=root->right;
 	}
-	if(largest->data!=root->data)
+	if(smallest->data!=root->data)
 	{
 		int temp;
-		printf("\nSwapped %d with %d",largest->data,root->data);
-		temp=largest->data;
-		largest->data=root->data;
+		printf("\nSwapped %d with %d",smallest->data,root->data);
+		temp=smallest->data;
+		smallest->data=root->data;
 		root->data=temp;
-		return max_heapify(largest);
+		return min_heapify(smallest);
 	}
 }
 
@@ -91,9 +91,9 @@ struct node *find_leaf(struct node *root,int noofbits)
 }
 
 
-int extract_max()
+int extract_min()
 {
-	int maxelement; 
+	int minelement; 
 	if(root==NULL)
 	{
 		printf("\n\nHEAP IS EMPTY");
@@ -101,21 +101,21 @@ int extract_max()
 	}
 	if(root->left ==NULL && root->right==NULL)
 	{
-		maxelement=root->data;
+		minelement=root->data;
 		root=NULL;
-		return maxelement;
+		return minelement;
 	}
 
 	struct node *leaf_node;
 	noofbits=numtobit(heapsize);
 	leaf_node=find_leaf(root,noofbits);
-	maxelement=root->data;
+	minelement=root->data;
 	root->data=leaf_node->data;
 //	leaf_node->parent->left=leaf_node->parent->right=NULL;
 	free(leaf_node);
-	max_heapify(root);
+	min_heapify(root);
 	heapsize=heapsize-1;
-	return maxelement;
+	return minelement;
 }
 
 
@@ -161,7 +161,7 @@ if(bitpointer==0)
 			root->right=newnode;
 		}
 		heapsize+=1;
-		while(newnode->parent!=NULL && (newnode->parent->data<newnode->data))
+		while(newnode->parent!=NULL && (newnode->parent->data>newnode->data))
 		{
 			
 					int temp;
@@ -232,7 +232,7 @@ void main()
 {
  	int noofbits;
  	int num=0;
- 	int max_element;
+ 	int min_element;
 int inparray[8]={1,10,14,9,23,54,21,6};
 for(num=1;num<=8;num++)
 {
@@ -244,14 +244,14 @@ for(num=1;num<=8;num++)
 	insert(inparray[num-1],root,noofbits);
 }
 printf("\n\n\nValue of heapsize is %d",heapsize);
-max_heapify(root);
+min_heapify(root);
 printf("\n\n\nheapified\n\n");
 
-printf("\n\n\nTesting extract_max\n");
+printf("\n\n\nTesting extract_min\n");
 while(root!=NULL)
 	{
-	max_element=extract_max();
-	printf("\n\n\n MAX is %d\n\n\n",max_element);
+	min_element=extract_min();
+	printf("\n\n\n MIN is %d\n\n\n",min_element);
 	}
 
 
