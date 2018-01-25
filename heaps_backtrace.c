@@ -224,8 +224,10 @@ void main()
  	int noofbits;
  	int num=0;
 int inparray[8]={1,10,14,9,23,54,21,6};
+
+//int inparray[20]={40, 79, 89, 16, 23, 22, 56, 32, 67, 81, 6, 64, 38, 52, 2, 12, 24, 54, 45, 25};
 int min_element=0;
-	for(num=1;num<=8;num++)
+	for(num=1;num<=8;num++)                     // UPDATE THE size of ARRAY here,took 8 elements for demo.
 {
 	printf("\n\nInserting %d",inparray[num-1]);
 	noofbits=numtobit(num);
